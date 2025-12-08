@@ -193,8 +193,8 @@ module.exports = (io) => {
   });
 
   // Who is playing
-  socket.on('playing', ({roomId, playerName, points, genre}) => {
-    socket.to(roomId).emit('currentPlayer', { playerName, genre, points})
+  socket.on('playing', ({roomId, playerName, points, genre, avatarSrc}) => {
+    socket.to(roomId).emit('currentPlayer', { playerName, genre, points, avatarSrc})
   })
 
   socket.on('disconnect', () => {
