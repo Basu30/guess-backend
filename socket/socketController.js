@@ -32,7 +32,7 @@ module.exports = (io) => {
     console.log(`Player ${playerName} joined room ${roomId}`);
 
     // Confirm to the joining a player
-     socket.emit('joinedRoom', {roomId, playerName});
+    //  socket.emit('joinedRoom', {roomId, playerName});
 
     // Notify others in the room
     io.to(roomId).emit('message',{
@@ -62,7 +62,7 @@ module.exports = (io) => {
             await room.save();
         }
       
-      io.to(roomId).emit('playerJoined', room.toObject({ getters: true }));
+      // io.to(roomId).emit('playerJoined', room.toObject({ getters: true }));
 
       // if player joins, refresh room list for everyone
       await allRooms()
@@ -82,14 +82,21 @@ module.exports = (io) => {
       const player = room.players.find(p => p.name === playerName);
 
       if(player) {
-        player.score = (player.score || 0) + points; 
+        player.score = (player.score || 0) + (points || 0); 
         await room.save();
        
-      } else {  // or just player stay with their current score
-        player.score = player.score || 0;
-        await room.save();
-      }
+      } 
+     
       console.log(`Updated Score ${playerName}: + ${points}` );
+
+      // WIN logic
+      if(player.score >= 100){
+        io.to(roomId).emit('playerWon', {
+          playerName,
+          score: player.score
+        });
+        // return;
+      }
 
       // Automatically turn next Player
       if(room.turnIndex === undefined) room.turnIndex = 0;
@@ -105,7 +112,7 @@ module.exports = (io) => {
       // Send (emit) updated room to everyone
       io.to(roomId).emit('scoreUpdated', { 
         playerName: player.name,
-        points: points || null,
+        points: points,
         newScore: player.score,
         room: room.toObject({ getters: true })});
 
