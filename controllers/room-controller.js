@@ -127,7 +127,7 @@ const deletePlayer = async (req, res, next) => {
         console.log('Room after deletion: ', room.players)
 
         // Return 
-        res.status(404).json({ 
+        res.status(200).json({ 
             message: 'Player deleted!', 
             players: room.players
         })

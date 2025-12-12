@@ -70,7 +70,7 @@ socketController(io);
 
 
 // Database + start server
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 mongoose
   .connect('mongodb+srv://basuSong:BilguunSong@cluster0.4qmc5.mongodb.net/guess-song?retryWrites=true&w=majority&appName=Cluster0')
