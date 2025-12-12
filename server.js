@@ -16,7 +16,6 @@ const app = express();
 
 // CORS & JSON early
 app.use(cors({ origin: '*', methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'] }));
-
 app.use(express.json());
 
 // Add Railway-friendly home route

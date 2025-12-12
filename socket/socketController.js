@@ -50,7 +50,7 @@ module.exports = (io) => {
       }
       
       // Check if player already exists
-        const exists = room.players.some(p => p.name === playerName);
+        const exists = room?.players?.some(p => p.name === playerName);
 
       // If player does NOT exist → add to MongoDB
         if (!exists) {
