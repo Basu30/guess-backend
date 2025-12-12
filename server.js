@@ -19,6 +19,11 @@ app.use(cors({ origin: '*', methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS
 
 app.use(express.json());
 
+// Add Railway-friendly home route
+app.get('/', (req, res) => {
+  res.send("Guess The Song backend is running!")
+});
+
 // --- Creating shared server ---
 const server = http.createServer(app);
 
@@ -36,23 +41,9 @@ app.use('/api', roomRoutes);
 app.use('/api/users', userRoutes);
 
 
-
-
-// app.use((req, res, next) => {
-//     res.setHeader('Access-Control-Allow-Origin', '*');
-//     res.setHeader(
-//         'Access-Control-Allow-Headers',
-//         'Origin, X-Requested-With, Content-Type, Accept, Authorization')
-//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
-
-//     next()
-// });
-
-
 // 404 handler
 app.use(( req, res, next) => {
-    const error = new HttpError('Could not find this route.', 400)
-    throw error;
+  return res.status(404).json({message: "Route not found"})
 });
 
 // Error handler
@@ -61,7 +52,7 @@ app.use((error, req, res, next) => {
       return next(error)
     };
 
-    res.status(error.code || 500).json({ message: error.message || 'An unknown error occurred!!!' });
+    res.status(error.code || 500).json({ message: error.message || 'Unknown error!!!' });
 })
 
 
