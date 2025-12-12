@@ -1,0 +1,11 @@
+# Use Nixpacks builder (default for Node.js)
+[build]
+builder = "nixpacks"
+
+# Use modern npm behavior (removes: npm warn config production ...)
+[build.env]
+NPM_CONFIG_OMIT = "dev"
+
+# Start command for Railway container
+[start]
+cmd = "node server.js"
