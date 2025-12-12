@@ -1,4 +1,4 @@
-const { io } = require('socket.io-client');
+
 const HttpError = require('../models/http-error');
 const Room = require('../models/room');
 
